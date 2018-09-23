@@ -72,8 +72,8 @@ import { View, ActivityIndicator } from 'react-native';
             <List dataArray={items}
               renderRow={(item) => 
                 <ListItem>
-                  <Text>{item.title}</Text>
-                  <Text>{item.amount}</Text>
+                    <Left><Text>{item.title}</Text></Left>
+                  <Body><Text>{item.amount}</Text></Body>
                 </ListItem>
               }>
               </List>
