@@ -10,6 +10,7 @@ import { View, Text, Button } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { LoginScreen } from './Screens/LoginScreen';
 import { BudgetScreen } from './Screens/Budget/BudgetScreen';
+import { TodoScreen } from './Screens/Todo/TodoScreen';
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -44,9 +45,10 @@ const RootStack = createStackNavigator(
     Details: DetailsScreen,
     Login: LoginScreen,
     Budget: BudgetScreen,
+    Todo: TodoScreen
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Todo',
   }
 );
 
