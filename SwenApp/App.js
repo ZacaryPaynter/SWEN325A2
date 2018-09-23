@@ -10,12 +10,15 @@ import { View, Text, Button } from 'react-native';
 import { createDrawerNavigator } from 'react-navigation';
 import { LoginScreen } from './Screens/LoginScreen';
 import { BudgetScreen } from './Screens/Budget/BudgetScreen';
-
+import { ScheduleScreen } from './Screens/Schedule/ScheduleScreen';
+import { ScheduleDayScreen } from './Screens/Schedule/ScheduleDayScreen';
 
 const RootStack = createDrawerNavigator(
   {
     Login: LoginScreen,
     Budget: BudgetScreen,
+    Schedule: ScheduleScreen,
+    ScheduleDay: ScheduleDayScreen,
   },
   {
     initialRouteName: 'Login',
