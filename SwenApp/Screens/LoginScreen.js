@@ -23,6 +23,11 @@ import {
     render() {
       return (
         <Container>
+                            <Header >
+                    <Body>
+                        <Title>Login</Title>
+                    </Body>
+                </Header>
           <Content>
             <Form>
               <Item Label>
