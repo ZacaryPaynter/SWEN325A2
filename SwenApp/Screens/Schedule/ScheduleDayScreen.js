@@ -5,12 +5,12 @@
  * @format
  * @flow
  */
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import {
     Container, Header, Left, Body, Input, Label, Text, Icon,
     Right, Title, Content, Form, Item, Button, List, ListItem
 } from 'native-base';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator} from 'react-native';
 
 export class ScheduleDayScreen extends Component {
 
@@ -43,8 +43,8 @@ export class ScheduleDayScreen extends Component {
                                 <Text>{item.description}</Text>
                             </Body>
                             <Right>
-                                <Button >
-                                    <Text>Edit</Text>
+                                <Button transparent >
+                                <Icon name='paper' />
                                 </Button>
                             </Right>
                         </ListItem>

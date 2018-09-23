@@ -72,9 +72,9 @@ export class ScheduleScreen extends Component {
                                 <Text>{item.day}</Text>
                             </Body>
                             <Right>
-                                <Button onPress={() => this.props.navigation.navigate('ScheduleDay', {
-                item: item, user: this.state.user
-            })}>
+                                <Button transparent onPress={() => this.props.navigation.navigate('ScheduleDay', {
+                                    item: item, user: this.state.user
+                                })}>
                                     <Icon name='arrow-forward' />
                                 </Button>
                             </Right>

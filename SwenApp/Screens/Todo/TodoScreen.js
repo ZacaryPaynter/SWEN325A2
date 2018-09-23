@@ -59,7 +59,7 @@ export class TodoScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Title>KanBan</Title>
+            <Title>Todo</Title>
           </Body>
           <Right>
             <Button transparent>
@@ -75,7 +75,18 @@ export class TodoScreen extends Component {
                             <Text>{this.state.TodoList.length}</Text>
                         </Badge>
                     </TabHeading>}>
-                        <Text>Tab 1</Text>
+                    <List dataArray={this.state.TodoList}
+                    renderRow={(item) =>
+                        <ListItem icon>
+                            <Body>
+                                <Text>{item.title}</Text>
+                            </Body>
+                            <Right>
+                            <Text>{item.description}</Text>
+                            </Right>
+                        </ListItem>
+                    }>
+                </List>
                     </Tab>
 
                     <Tab heading={<TabHeading>
