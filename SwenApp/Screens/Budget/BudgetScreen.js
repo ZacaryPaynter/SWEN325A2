@@ -14,7 +14,7 @@ import { View, ActivityIndicator } from 'react-native';
 
   export class BudgetScreen extends Component {
     static navigationOptions = {
-        title: 'Budget',
+        drawerLabel: 'Budget',
       };
     constructor(props) {
       super(props);
@@ -54,6 +54,21 @@ import { View, ActivityIndicator } from 'react-native';
     
         return(
           <View>
+               <Header >
+          <Left>
+            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
+              <Icon name='menu' />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Budget</Title>
+          </Body>
+          <Right>
+            <Button transparent>
+              <Icon name='add' />
+            </Button>
+          </Right>
+        </Header>
             <List dataArray={items}
               renderRow={(item) => 
                 <ListItem>

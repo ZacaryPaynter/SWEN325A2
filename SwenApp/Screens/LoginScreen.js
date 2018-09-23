@@ -13,7 +13,7 @@ import {
 
   export class LoginScreen extends Component {
     static navigationOptions = {
-        title: 'Login',
+        drawerLabel: 'Login',
       };
     constructor(props) {
       super(props);
