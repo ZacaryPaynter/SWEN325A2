@@ -96,20 +96,41 @@ export class TodoScreen extends Component {
                     <Tab heading={<TabHeading>
                         <Text>Doing</Text>
                         <Badge warning>
-                            <Text>1</Text>
+                        <Text>{this.state.DoingList.length}</Text>
                         </Badge>
                     </TabHeading>}>
-                        <Text>Tab 2</Text>
+                    <List dataArray={this.state.DoingList}
+                    renderRow={(item) =>
+                        <ListItem icon>
+                            <Body>
+                                <Text>{item.title}</Text>
+                            </Body>
+                            <Right>
+                            <Text>{item.description}</Text>
+                            </Right>
+                        </ListItem>
+                    }>
+                </List>
                     </Tab>
 
                     <Tab heading={<TabHeading>
                         <Text>Done</Text>
                         <Badge success>
-                            <Text>1</Text>
+                            <Text>{this.state.DoneList.length}</Text>
                         </Badge>
                     </TabHeading>}>
-                        <Text>Tab 3</Text>
-
+                    <List dataArray={this.state.DoneList}
+                    renderRow={(item) =>
+                        <ListItem icon>
+                            <Body>
+                                <Text>{item.title}</Text>
+                            </Body>
+                            <Right>
+                            <Text>{item.description}</Text>
+                            </Right>
+                        </ListItem>
+                    }>
+                </List>
                     </Tab>
 
                 </Tabs>
