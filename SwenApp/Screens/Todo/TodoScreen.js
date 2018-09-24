@@ -6,6 +6,10 @@ import {
 
 export class TodoScreen extends Component {
 
+    static navigationOptions = {
+        title: 'Todo',
+    };
+
     constructor(){
         super();
         this.state = {

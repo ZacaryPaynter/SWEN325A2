@@ -13,7 +13,7 @@ import {
 
   export class LoginScreen extends Component {
     static navigationOptions = {
-        drawerLabel: 'Login',
+        title: 'Login',
       };
     constructor(props) {
       super(props);
@@ -37,7 +37,7 @@ import {
                   value={this.state.user} />
               </Item>
             </Form>
-            <Button dark block onPress={() => this.props.navigation.navigate('Budget', {
+            <Button block onPress={() => this.props.navigation.navigate('Budget', {
                 user: this.state.user
             })}>
             <Text>Login</Text>

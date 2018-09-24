@@ -5,12 +5,12 @@
  * @format
  * @flow
  */
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import {
     Container, Header, Left, Body, Input, Label, Text, Icon,
     Right, Title, Content, Form, Item, Button, List, ListItem
 } from 'native-base';
-import { View, ActivityIndicator} from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
 export class ScheduleDayScreen extends Component {
 
@@ -28,6 +28,11 @@ export class ScheduleDayScreen extends Component {
         return (
             <View>
                 <Header >
+                    <Left>
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <Icon name='arrow-back' />
+                        </Button>
+                    </Left>
                     <Body>
                         <Title>{this.state.item.day}</Title>
                     </Body>
@@ -35,16 +40,16 @@ export class ScheduleDayScreen extends Component {
                 <List dataArray={items}
                     renderRow={(item) =>
                         <ListItem icon>
-                        <Left>
-                        <Text>{item.timeid}</Text>
-                        </Left>
+                            <Left>
+                                <Text>{item.timeid}</Text>
+                            </Left>
                             <Body>
                                 <Text>{item.title}</Text>
                                 <Text>{item.description}</Text>
                             </Body>
                             <Right>
                                 <Button transparent >
-                                <Icon name='paper' />
+                                    <Icon name='paper' />
                                 </Button>
                             </Right>
                         </ListItem>

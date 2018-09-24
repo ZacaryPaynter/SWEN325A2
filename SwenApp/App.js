@@ -7,7 +7,7 @@
  */
 import React, { Component, LogoTitle } from 'react';
 import { View, Text, Button } from 'react-native';
-import { createDrawerNavigator } from 'react-navigation';
+import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import { LoginScreen } from './Screens/LoginScreen';
 import { BudgetScreen } from './Screens/Budget/BudgetScreen';
 
@@ -16,18 +16,55 @@ import { TodoScreen } from './Screens/Todo/TodoScreen';
 import { ScheduleScreen } from './Screens/Schedule/ScheduleScreen';
 import { ScheduleDayScreen } from './Screens/Schedule/ScheduleDayScreen';
 
+const SchedStack = createStackNavigator({
+  Schedule: ScheduleScreen,
+  ScheduleDay: ScheduleDayScreen,
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
+  }
+);
 
-const RootStack = createDrawerNavigator(
+const BudStack = createStackNavigator({
+  Budget: BudgetScreen,
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
+  }
+);
+
+const TodoStack = createStackNavigator({
+  Todo: TodoScreen,
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
+  }
+);
+
+const DrawerStack = createDrawerNavigator(
   {
-    Login: LoginScreen,
-    Budget: BudgetScreen,
-    Todo: TodoScreen,
-    Schedule: ScheduleScreen,
-    ScheduleDay: ScheduleDayScreen,
+    Budget: BudStack,
+    Todo: TodoStack,
+    Schedule: SchedStack
+  }
+);
 
-  },
+const RootStack = createStackNavigator({
+  Login: LoginScreen,
+  Drawer: DrawerStack,
+},
   {
     initialRouteName: 'Login',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
   }
 );
 

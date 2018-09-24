@@ -14,11 +14,11 @@ import { View, ActivityIndicator } from 'react-native';
 
 export class BudgetScreen extends Component {
   static navigationOptions = {
-    drawerLabel: 'Budget',
+    title: 'Budget',
   };
   constructor(props) {
     super(props);
-    this.state = { user: '', isLoading: true };
+    this.state = { user: '', isLoading: true, firstLogin: true };
   }
 
   componentDidMount() {
@@ -53,6 +53,7 @@ export class BudgetScreen extends Component {
     items = this.state.dataSource;
 
     return (
+
       <View>
         <Header >
           <Left>

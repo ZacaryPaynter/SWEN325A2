@@ -14,7 +14,7 @@ import { View, ActivityIndicator } from 'react-native';
 
 export class ScheduleScreen extends Component {
     static navigationOptions = {
-        drawerLabel: 'Schedule',
+        title: 'Schedule',
     };
 
     constructor(props) {
