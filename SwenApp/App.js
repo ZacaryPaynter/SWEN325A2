@@ -10,6 +10,7 @@ import { View, Text, Button } from 'react-native';
 import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import { LoginScreen } from './Screens/LoginScreen';
 import { BudgetScreen } from './Screens/Budget/BudgetScreen';
+import { NewBudgetScreen } from './Screens/Budget/NewBudgetScreen'
 
 import { TodoScreen } from './Screens/Todo/TodoScreen';
 
@@ -29,6 +30,7 @@ const SchedStack = createStackNavigator({
 
 const BudStack = createStackNavigator({
   Budget: BudgetScreen,
+  NewBudget: NewBudgetScreen,
 }, {
     headerMode: 'none',
     navigationOptions: {

@@ -7,81 +7,82 @@
  */
 import React, { Component } from 'react';
 import {
-  Container, Header, Left, Body, Input, Label, Text, Icon,
-  Right, Title, Content, Form, Item, Button, List, ListItem
+    Container, Header, Left, Body, Input, Label, Text, Icon,
+    Right, Title, Content, Form, Item, Button, List, ListItem
 } from 'native-base';
 import { View, ActivityIndicator } from 'react-native';
 
 export class BudgetScreen extends Component {
-  static navigationOptions = {
-    title: 'Budget',
-  };
-  constructor(props) {
-    super(props);
-    this.state = { user: '', isLoading: true, firstLogin: true };
-  }
+    static navigationOptions = {
+        title: 'Budget',
+    };
 
-  componentDidMount() {
-    return fetch('http://agile-cove-43620.herokuapp.com/api/budget')
-      .then((response) => response.json())
-      .then((responseJson) => {
-
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson,
-        }, function () {
-
-        });
-
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  render() {
-
-    if (this.state.isLoading) {
-      return (
-        <View style={{ flex: 1, padding: 20 }}>
-          <ActivityIndicator />
-        </View>
-      )
+    constructor(props) {
+        super(props);
+        this.state = { user: '', isLoading: true};
     }
 
-    var items = [];
-    items = this.state.dataSource;
+    componentDidMount() {
+        return fetch('http://agile-cove-43620.herokuapp.com/api/budget')
+            .then((response) => response.json())
+            .then((responseJson) => {
 
-    return (
+                this.setState({
+                    isLoading: false,
+                    dataSource: responseJson,
+                }, function () {
 
-      <View>
-        <Header >
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-              <Icon name='menu' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Budget</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name='add' />
-            </Button>
-          </Right>
-        </Header>
-            <List dataArray={items}
-              renderRow={(item) => 
-                <ListItem>
-                    <Left><Text>{item.title}</Text></Left>
-                  <Body><Text>{item.amount}</Text></Body>
-                </ListItem>
-              }>
-              </List>
-          </View>
+                });
+
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    render() {
+
+        if (this.state.isLoading) {
+            return (
+                <View style={{ flex: 1, padding: 20 }}>
+                    <ActivityIndicator />
+                </View>
+            )
+        }
+
+        var items = [];
+        items = this.state.dataSource;
+
+        return (
+
+            <View>
+                <Header >
+                    <Left>
+                        <Button transparent onPress={() => this.props.navigation.openDrawer()}>
+                            <Icon name='menu' />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Budget</Title>
+                    </Body>
+                    <Right>
+                        <Button transparent onPress={() => this.props.navigation.navigate('NewBudget')}>
+                            <Icon name='add' />
+                        </Button>
+                    </Right>
+                </Header>
+                <List dataArray={items}
+                    renderRow={(item) =>
+                        <ListItem>
+                            <Left><Text>{item.title}</Text></Left>
+                            <Body><Text>{item.amount}</Text></Body>
+                        </ListItem>
+                    }>
+                </List>
+            </View>
         );
-      }
     }
+}
 
 
 
