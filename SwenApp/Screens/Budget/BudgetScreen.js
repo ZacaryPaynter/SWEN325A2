@@ -1,91 +1,110 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 import React, { Component } from 'react';
-import {
-    Container, Header, Left, Body, Input, Label, Text, Icon,
-    Right, Title, Content, Form, Item, Button, List, ListItem
-} from 'native-base';
-import { View, ActivityIndicator } from 'react-native';
+import { ListView, View, ActivityIndicator  } from 'react-native';
+import { Container, Header, Content, Button, Title,
+  Icon, List, ListItem, Text, Left, Right, Body} from 'native-base';
 
 export class BudgetScreen extends Component {
-    static navigationOptions = {
-        title: 'Budget',
+  constructor(props) {
+    super(props);
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.state = {
+      user: '',
+      isLoading: true,
+      basic: true,
+      listViewData: [],
     };
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = { user: '', isLoading: true};
+
+  componentDidMount() {
+    return fetch('http://agile-cove-43620.herokuapp.com/api/budget')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          listViewData: responseJson,
+        }, function () {
+
+        });
+
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  deleteRow(secId, rowId, rowMap) {
+    rowMap[`${secId}${rowId}`].props.closeRow();
+    const newData = [...this.state.listViewData];
+    newData.splice(rowId, 1);
+    this.setState({ listViewData: newData });
+  }
+  render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={{ flex: 1, padding: 20 }}>
+          <ActivityIndicator />
+        </View>
+      )
     }
-
-    componentDidMount() {
-        return fetch('http://agile-cove-43620.herokuapp.com/api/budget')
-            .then((response) => response.json())
-            .then((responseJson) => {
-
-                this.setState({
-                    isLoading: false,
-                    dataSource: responseJson,
-                }, function () {
-
-                });
-
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-
-    render() {
-
-        if (this.state.isLoading) {
-            return (
-                <View style={{ flex: 1, padding: 20 }}>
-                    <ActivityIndicator />
-                </View>
-            )
-        }
-
-        var items = [];
-        items = this.state.dataSource;
-
-        return (
-
-            <View>
-                <Header >
-                    <Left>
-                        <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-                            <Icon name='menu' />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Budget</Title>
-                    </Body>
-                    <Right>
-                        <Button transparent onPress={() => this.props.navigation.navigate('NewBudget')}>
-                            <Icon name='add' />
-                        </Button>
-                    </Right>
-                </Header>
-                <List dataArray={items}
-                    renderRow={(item) =>
-                        <ListItem>
-                            <Left><Text>{item.title}</Text></Left>
-                            <Body><Text>{item.amount}</Text></Body>
-                        </ListItem>
-                    }>
-                </List>
-            </View>
-        );
-    }
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    return (
+      <Container>
+        <Header >
+          <Left>
+            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
+              <Icon name='menu' />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Budget</Title>
+          </Body>
+          <Right>
+            <Button transparent onPress={() => this.props.navigation.navigate('NewBudget')}>
+              <Icon name='add' />
+            </Button>
+          </Right>
+        </Header>
+        <Content>
+            <Text>Income</Text>
+          <List
+            leftOpenValue={75}
+            rightOpenValue={-75}
+            dataSource={this.ds.cloneWithRows(this.state.listViewData)}
+            renderRow={data =>
+              <ListItem>
+                <Text> {data.title} </Text>
+              </ListItem>}
+            renderLeftHiddenRow={data =>
+              <Button full onPress={() => alert(data)}>
+                <Icon active name="information-circle" />
+              </Button>}
+            renderRightHiddenRow={(data, secId, rowId, rowMap) =>
+              <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
+                <Icon active name="trash" />
+              </Button>}
+          />
+          <Text>Outcome</Text>
+          <List
+            leftOpenValue={75}
+            rightOpenValue={-75}
+            dataSource={this.ds.cloneWithRows(this.state.listViewData)}
+            renderRow={data =>
+              <ListItem>
+                <Text> {data.title} </Text>
+              </ListItem>}
+            renderLeftHiddenRow={data =>
+              <Button full onPress={() => alert(data)}>
+                <Icon active name="information-circle" />
+              </Button>}
+            renderRightHiddenRow={(data, secId, rowId, rowMap) =>
+              <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
+                <Icon active name="trash" />
+              </Button>}
+          />
+        </Content>
+      </Container>
+    );
+  }
 }
-
-
-
-
-
-

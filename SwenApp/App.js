@@ -6,7 +6,6 @@
 *
  */
 import React, { Component, LogoTitle } from 'react';
-import { View, Text, Button } from 'react-native';
 import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import { LoginScreen } from './Screens/LoginScreen';
 import { BudgetScreen } from './Screens/Budget/BudgetScreen';
