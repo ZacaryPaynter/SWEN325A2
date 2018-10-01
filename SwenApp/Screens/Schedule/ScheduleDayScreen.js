@@ -7,10 +7,12 @@
  */
 import React, { Component } from 'react';
 import {
-    Container, Header, Left, Body, Input, Label, Text, Icon,
+    Container, Header, Left, Body, Input, Label, Text, Icon, StyleProvider,
     Right, Title, Content, Form, Item, Button, List, ListItem
 } from 'native-base';
+import getTheme from '../../native-base-theme/components';
 import { View, ActivityIndicator } from 'react-native';
+import commonColor from '../../native-base-theme/variables/commonColor';
 
 export class ScheduleDayScreen extends Component {
 
@@ -26,6 +28,7 @@ export class ScheduleDayScreen extends Component {
         items = this.state.item.sched_times;
 
         return (
+            <StyleProvider style={getTheme(commonColor)}>
             <View>
                 <Header >
                     <Left>
@@ -34,7 +37,7 @@ export class ScheduleDayScreen extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>{this.state.item.day}</Title>
+                        <Title uppercase={false}>{this.state.item.day}</Title>
                     </Body>
                 </Header>
                 <List dataArray={items}
@@ -56,6 +59,7 @@ export class ScheduleDayScreen extends Component {
                     }>
                 </List>
             </View>
+            </StyleProvider>
         );
     }
 }

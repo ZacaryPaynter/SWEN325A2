@@ -10,7 +10,6 @@ import {
   Container, Header, Left, Body, Input, Label, Text, Icon,
   Right, Title, Content, Form, Item, Button, Picker
 } from 'native-base';
-import NumericInput from 'react-native-numeric-input';
 
 export class NewBudgetScreen extends Component {
   constructor(props) {
@@ -62,7 +61,7 @@ export class NewBudgetScreen extends Component {
       <Container>
         <Header >
           <Body>
-            <Title>New Budget</Title>
+            <Title>NEW BUDGET</Title>
           </Body>
         </Header>
         <Content>

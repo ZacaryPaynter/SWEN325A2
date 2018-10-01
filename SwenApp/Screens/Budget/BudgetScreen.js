@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
-import { ListView, View, ActivityIndicator } from 'react-native';
+import { ListView, View, ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
 import {
-    Container, Header, Content, Button, Title, Card,
-    Icon, List, ListItem, Text, Left, Right, Body
+    Container, Header, Content, Button, Title, Card, StyleProvider,
+    Icon, List, ListItem, Text, Left, Right, Body, CardItem
 } from 'native-base';
+import getTheme from '../../native-base-theme/components';
+import commonColor from '../../native-base-theme/variables/commonColor';
 
 const budgetUrl = 'http://agile-cove-43620.herokuapp.com/api/budget';
+
+var deviceHeight = Dimensions.get('window').height;
+var deviceWidth = Dimensions.get('window').width;
+
+const styles = StyleSheet.create({
+    mainContainer: {
+        height: deviceHeight / 2,
+        width: deviceWidth,
+    }
+});
 
 export class BudgetScreen extends Component {
     constructor(props) {
@@ -16,6 +28,8 @@ export class BudgetScreen extends Component {
             isLoading: true,
             basic: true,
             listViewData: [],
+            incomes: [],
+            outcomes: []
         };
     }
 
@@ -29,7 +43,8 @@ export class BudgetScreen extends Component {
                     isLoading: false,
                     listViewData: responseJson,
                 }, function () {
-
+                    this.state.incomes = [];
+                    this.state.outcomes = [];
                 });
 
             })
@@ -62,6 +77,7 @@ export class BudgetScreen extends Component {
         }
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         return (
+            <StyleProvider style={getTheme(commonColor)}>
             <Container>
                 <Header >
                     <Left>
@@ -78,17 +94,19 @@ export class BudgetScreen extends Component {
                         </Button>
                     </Right>
                 </Header>
-                <Content >
+                <Container style={{ width: styles.mainContainer.width, height: styles.mainContainer.height }}>
                     <Card >
-                        <Text>Income</Text>
+                        <CardItem header >
+                            <Text>INCOME</Text>
+                        </CardItem>
                         <List
                             leftOpenValue={75}
                             rightOpenValue={-75}
                             dataSource={this.ds.cloneWithRows(this.state.listViewData)}
                             renderRow={data =>
-                                <ListItem>
+                                <CardItem>
                                     <Text> {data.title} </Text>
-                                </ListItem>}
+                                </CardItem>}
                             renderLeftHiddenRow={data =>
                                 <Button full onPress={() => alert(data.title + " " + data.amount)}>
                                     <Icon active name="information-circle" />
@@ -99,29 +117,37 @@ export class BudgetScreen extends Component {
                                 </Button>}
                         />
                     </Card>
-                    <Card style={{flex: 2}}>
-                        <Text>Outcome</Text>
+
+                </Container>
+                <Container style={{ width: styles.mainContainer.width, height: styles.mainContainer.height }}>
+                
+                    <Card >
+                    <CardItem header >
+                        <Text>OUTCOME</Text>
+                    </CardItem>
                         <List
                             leftOpenValue={75}
                             rightOpenValue={-75}
                             dataSource={this.ds.cloneWithRows(this.state.listViewData)}
                             renderRow={data =>
-                                <ListItem>
+                                <CardItem>
                                     <Text> {data.title} </Text>
-                                </ListItem>}
+                                </CardItem>}
                             renderLeftHiddenRow={data =>
-                                <Button full onPress={() => alert(data)}>
+                                <Button full onPress={() => alert(data.title + " " + data.amount)}>
                                     <Icon active name="information-circle" />
                                 </Button>}
                             renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-                                <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
+                                <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap, data)}>
                                     <Icon active name="trash" />
                                 </Button>}
                         />
                     </Card>
 
-                </Content>
+                </Container>
+
             </Container>
+            </StyleProvider>
         );
     }
 }
