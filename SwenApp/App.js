@@ -7,6 +7,7 @@
  */
 import React, { Component, LogoTitle } from 'react';
 import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
+import { Root } from './node_modules/native-base';
 import { LoginScreen } from './Screens/LoginScreen';
 import { BudgetScreen } from './Screens/Budget/BudgetScreen';
 import { NewBudgetScreen } from './Screens/Budget/NewBudgetScreen'
@@ -71,6 +72,9 @@ const RootStack = createStackNavigator({
 
 export default class App extends React.Component {
   render() {
-    return <RootStack />;
+    return (
+      <Root>
+        <RootStack />
+      </Root>);
   }
 }

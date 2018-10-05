@@ -67,6 +67,15 @@ export class BudgetScreen extends Component {
         newData.splice(rowId, 1);
         this.setState({ listViewData: newData });
     }
+
+    checkIncome(data, flag){
+        if (data.income==flag){
+            return(<CardItem>
+                <Text> {data.title} </Text>
+        </CardItem>)
+        }
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -74,8 +83,10 @@ export class BudgetScreen extends Component {
                     <ActivityIndicator />
                 </View>
             )
-        }
+            }
+
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        const income = true;
         return (
             <StyleProvider style={getTheme(commonColor)}>
             <Container>
@@ -103,10 +114,9 @@ export class BudgetScreen extends Component {
                             leftOpenValue={75}
                             rightOpenValue={-75}
                             dataSource={this.ds.cloneWithRows(this.state.listViewData)}
-                            renderRow={data =>
-                                <CardItem>
-                                    <Text> {data.title} </Text>
-                                </CardItem>}
+                            renderRow={ data => 
+                                    this.checkIncome(data, true)
+                                }
                             renderLeftHiddenRow={data =>
                                 <Button full onPress={() => alert(data.title + " " + data.amount)}>
                                     <Icon active name="information-circle" />
@@ -129,10 +139,9 @@ export class BudgetScreen extends Component {
                             leftOpenValue={75}
                             rightOpenValue={-75}
                             dataSource={this.ds.cloneWithRows(this.state.listViewData)}
-                            renderRow={data =>
-                                <CardItem>
-                                    <Text> {data.title} </Text>
-                                </CardItem>}
+                            renderRow={data => 
+                                this.checkIncome(data, false)
+                            }
                             renderLeftHiddenRow={data =>
                                 <Button full onPress={() => alert(data.title + " " + data.amount)}>
                                     <Icon active name="information-circle" />

@@ -10,8 +10,10 @@ import {
     Container, Header, Left, Body, Input, Label, Text, Icon, StyleProvider,
     Right, Title, Content, Form, Item, Button, List, ListItem
 } from 'native-base';
-import getTheme from '../../native-base-theme/components';
 import { View, ActivityIndicator } from 'react-native';
+
+
+import getTheme from '../../native-base-theme/components';
 import commonColor from '../../native-base-theme/variables/commonColor';
 
 export class ScheduleDayScreen extends Component {
@@ -28,8 +30,9 @@ export class ScheduleDayScreen extends Component {
         items = this.state.item.sched_times;
 
         return (
-            <StyleProvider style={getTheme(commonColor)}>
-            <View>
+            
+      <StyleProvider style={getTheme(commonColor)}>
+            <Container>
                 <Header >
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -58,7 +61,7 @@ export class ScheduleDayScreen extends Component {
                         </ListItem>
                     }>
                 </List>
-            </View>
+            </Container>
             </StyleProvider>
         );
     }

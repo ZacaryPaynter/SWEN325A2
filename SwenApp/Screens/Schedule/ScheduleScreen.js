@@ -7,10 +7,13 @@
  */
 import React, { Component } from 'react';
 import {
-    Container, Header, Left, Body, Input, Label, Text, Icon,
+    Container, Header, Left, Body, Input, Label, Text, Icon, StyleProvider,
     Right, Title, Content, Form, Item, Button, List, ListItem
 } from 'native-base';
 import { View, ActivityIndicator } from 'react-native';
+
+import getTheme from '../../native-base-theme/components';
+import commonColor from '../../native-base-theme/variables/commonColor';
 
 export class ScheduleScreen extends Component {
     static navigationOptions = {
@@ -54,7 +57,9 @@ export class ScheduleScreen extends Component {
         items = this.state.dataSource;
 
         return (
-            <View>
+
+      <StyleProvider style={getTheme(commonColor)}>
+            <Container>
                 <Header >
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.openDrawer()}>
@@ -81,7 +86,8 @@ export class ScheduleScreen extends Component {
                         </ListItem>
                     }>
                 </List>
-            </View>
+            </Container>
+            </StyleProvider>
         );
     }
 }

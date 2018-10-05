@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import {
-   Badge, Container, Header, Left, Body, Input, Label, Text, Icon,
+   Badge, Container, Header, Left, Body, Input, Label, Text, Icon, StyleProvider,
     Right, Tab,Tabs, TabHeading, Title, Content, Form, Item, Button, List, ListItem
   } from 'native-base';
+
+import getTheme from '../../native-base-theme/components';
+import commonColor from '../../native-base-theme/variables/commonColor';
 
 export class TodoScreen extends Component {
 
@@ -55,6 +58,8 @@ export class TodoScreen extends Component {
 
     render() {
         return (
+
+      <StyleProvider style={getTheme(commonColor)}>
             <Container>
                    <Header >
           <Left>
@@ -135,6 +140,7 @@ export class TodoScreen extends Component {
 
                 </Tabs>
             </Container>
+            </StyleProvider>
         );
     }
 }
