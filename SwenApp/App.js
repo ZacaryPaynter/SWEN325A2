@@ -11,6 +11,7 @@ import { Root } from './node_modules/native-base';
 import { LoginScreen } from './Screens/LoginScreen';
 import { BudgetScreen } from './Screens/Budget/BudgetScreen';
 import { NewBudgetScreen } from './Screens/Budget/NewBudgetScreen'
+import { EditBudgetScreen } from './Screens/Budget/EditBudgetScreen'
 
 import { TodoScreen } from './Screens/Todo/TodoScreen';
 
@@ -31,6 +32,7 @@ const SchedStack = createStackNavigator({
 const BudStack = createStackNavigator({
   Budget: BudgetScreen,
   NewBudget: NewBudgetScreen,
+  EditBudget: EditBudgetScreen,
 }, {
     headerMode: 'none',
     navigationOptions: {

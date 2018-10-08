@@ -71,10 +71,21 @@ export class BudgetScreen extends Component {
     checkIncome(data, flag){
         if (data.income==flag){
             return(<CardItem>
-                <Text> {data.title} </Text>
+                   <Body>
+                                <Text>{data.title}</Text>
+                            </Body>
+                            <Right>
+                            <Text>${data.amount}</Text>
+                            </Right>
         </CardItem>)
         }
     }
+
+    editBudget(data){
+       this.props.navigation.navigate('EditBudget', {
+            item: data, user: this.state.user
+        })}
+    
 
     render() {
         if (this.state.isLoading) {
@@ -118,7 +129,7 @@ export class BudgetScreen extends Component {
                                     this.checkIncome(data, true)
                                 }
                             renderLeftHiddenRow={data =>
-                                <Button full onPress={() => alert(data._id+" "+data.title + " " + data.amount)}>
+                                <Button full info onPress={() => this.editBudget(data)}>
                                     <Icon active name="information-circle" />
                                 </Button>}
                             renderRightHiddenRow={(data, secId, rowId, rowMap) =>
@@ -143,13 +154,14 @@ export class BudgetScreen extends Component {
                                 this.checkIncome(data, false)
                             }
                             renderLeftHiddenRow={data =>
-                                <Button full info onPress={() => alert(data.title + " " + data.amount)}>
+                                <Button full info onPress={() => this.editBudget(data)}>
                                     <Icon active name="information-circle" />
                                 </Button>}
                             renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-                                <Button full warning onPress={_ => this.deleteRow(secId, rowId, rowMap, data)}>
-                                    <Icon active name="trash" />
-                                </Button>}
+                                <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap, data)}>
+                                <Icon active name="trash" />
+                            </Button> 
+                            }
                         />
                     </Card>
 
