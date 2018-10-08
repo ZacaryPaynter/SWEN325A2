@@ -14,7 +14,7 @@ import { NewBudgetScreen } from './Screens/Budget/NewBudgetScreen'
 import { EditBudgetScreen } from './Screens/Budget/EditBudgetScreen'
 
 import { TodoScreen } from './Screens/Todo/TodoScreen';
-
+import {NewTaskScreen} from './Screens/Todo/NewTodoScreen';
 import { ScheduleScreen } from './Screens/Schedule/ScheduleScreen';
 import { ScheduleDayScreen } from './Screens/Schedule/ScheduleDayScreen';
 
@@ -43,6 +43,7 @@ const BudStack = createStackNavigator({
 
 const TodoStack = createStackNavigator({
   Todo: TodoScreen,
+  NewTask: NewTaskScreen,
 }, {
     headerMode: 'none',
     navigationOptions: {
