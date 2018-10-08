@@ -32,7 +32,10 @@ export class EditScheduleDayScreen extends Component {
     });
   }
 
-  submitForm() {
+  submitForm(flagForRemove) {
+    if (flagForRemove==true){
+      this.state.category = ''
+    }
     var target = this.state.item.timeid
     var title = this.state.title
     var desc = this.state.description
@@ -40,9 +43,9 @@ export class EditScheduleDayScreen extends Component {
 
     this.state.dayItem.sched_times.forEach(function (element) {
       if (element.timeid==target){
-        element.title = title
-        element.description = desc
-        element.category = cat
+        if ((title != '' && flagForRemove==false) || (title == '' && flagForRemove==true)) element.title = title
+        if ((desc != '' && flagForRemove==false) || (desc == '' && flagForRemove==true)) element.description = desc
+        if ((cat != '' && flagForRemove==false) || (desc == '' && flagForRemove==true)) element.category = cat
         return
       }});
        
@@ -68,6 +71,16 @@ export class EditScheduleDayScreen extends Component {
             buttonText: 'Okay',
             type: 'success'
           })
+          this.setState({
+            user: '',
+            title: '',
+            description: '',
+            category: '',
+            item: {}, 
+            dayItem: {},  
+            value: '',
+        });
+          
         })
         .catch(function (err) {
           Toast.show({
@@ -78,16 +91,26 @@ export class EditScheduleDayScreen extends Component {
         });
     }
 
+    isDisabled(){
+      if (this.state.item.title=='') return true
+      else return false
+    }
+
+    cleanNav() {
+      this.props.navigation.reset;
+      this.props.navigation.push('Schedule')
+  }
+
   render() {
-    this.state.dayItem = this.props.navigation.getParam('dayItem', 'no dayItem');
-    this.state.item = this.props.navigation.getParam('item', 'no item');
+    this.state.dayItem = this.props.navigation.getParam('dayItem');
+    this.state.item = this.props.navigation.getParam('item');
 
     return (
       <StyleProvider style={getTheme(commonColor)}>
         <Container>
           <Header >
             <Left>
-              <Button transparent onPress={() => this.props.navigation.goBack()}>
+              <Button transparent onPress={() => this.cleanNav()}>
                 <Icon name='arrow-back' />
               </Button>
             </Left>
@@ -128,8 +151,11 @@ export class EditScheduleDayScreen extends Component {
                 </Picker>
               </Item>
             </Form>
-            <Button block onPress={() => this.submitForm()}>
+            <Button block onPress={() => this.submitForm(false)}>
               <Text>Submit</Text>
+            </Button>
+            <Button danger disabled={this.isDisabled()}  block onPress={() => this.submitForm(true)}>
+              <Text>Remove</Text>
             </Button>
           </Content>
         </Container>

@@ -65,7 +65,13 @@ export class NewBudgetScreen extends Component {
             buttonText: 'Okay', 
             type: 'success'
           })
-          
+          this.setState({
+            title: '',
+            amount: 0,
+            selected: undefined,
+            value : '',
+            isIncome: true
+          });
         })
         .catch(function (err) {
           Toast.show({
@@ -85,13 +91,18 @@ export class NewBudgetScreen extends Component {
 
   }
 
+  cleanNav() {
+    this.props.navigation.reset;
+    this.props.navigation.push('Budget')
+}
+
   render() {
     return (
       <StyleProvider style={getTheme(commonColor)}>
         <Container>
           <Header >
             <Left>
-              <Button transparent onPress={() => this.props.navigation.goBack()}>
+              <Button transparent onPress={() => this.cleanNav()}>
                 <Icon name='arrow-back' />
               </Button>
             </Left>
