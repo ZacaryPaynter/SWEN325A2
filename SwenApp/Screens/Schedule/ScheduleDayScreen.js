@@ -8,9 +8,9 @@
 import React, { Component } from 'react';
 import {
     Container, Header, Left, Body, Input, Label, Text, Icon, StyleProvider,
-    Right, Title, Content, Form, Item, Button, List, ListItem
+    Right, Title, Content, Form, Item, Button, List, ListItem, Thumbnail,
 } from 'native-base';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Image } from 'react-native';
 
 
 import getTheme from '../../native-base-theme/components';
@@ -21,6 +21,29 @@ export class ScheduleDayScreen extends Component {
     constructor(props) {
         super(props);
         this.state = { user: '', item: {}, isLoading: true };
+    }
+
+    getTitle(item) {
+        if (item.title == '') return 'Free Time'
+        else return item.title
+    }
+
+    getDesc(item) {
+        if (item.description == '') return 'Add New Schedule'
+        else return item.description
+    }
+
+    getAvatar(item) {
+        if (item.category == '') return 'asset:/leisure.png'
+        else return 'asset:/' + item.category + '.png'
+    }
+
+    getButton(item) {
+        if (item.category == '') {
+            return 'plus'
+        } else {
+            return 'pencil'
+        }
     }
 
     render() {
@@ -41,23 +64,26 @@ export class ScheduleDayScreen extends Component {
                         </Left>
                         <Body>
                             <Title>
-                               {this.state.item.day}
-                               </Title>
+                                {this.state.item.day}
+                            </Title>
                         </Body>
                     </Header>
                     <List dataArray={items}
                         renderRow={(item) =>
-                            <ListItem icon>
+                            <ListItem avatar>
                                 <Left>
-                                    <Text>{item.timeid}</Text>
+                                    <Thumbnail source={{ uri: this.getAvatar(item) }} style={{ width: 40, height: 40 }} />
                                 </Left>
                                 <Body>
-                                    <Text>{item.title}</Text>
-                                    <Text>{item.description}</Text>
+                                    <Text>{this.getTitle(item)}</Text>
+                                    <Text note>{this.getDesc(item)}</Text>
                                 </Body>
                                 <Right>
-                                    <Button transparent >
-                                    <Icon type="EvilIcons" name="pencil" />
+                                    <Text note>{item.timeid}</Text>
+                                    <Button small transparent onPress={() => this.props.navigation.navigate('EditSchedule', {
+                                        item: item, user: this.state.user, dayItem: this.state.item 
+                                    })} style={{ height: 25}}>
+                                        <Icon type="EvilIcons" name={this.getButton(item)} />
                                     </Button>
                                 </Right>
                             </ListItem>

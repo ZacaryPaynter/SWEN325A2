@@ -17,10 +17,12 @@ import { TodoScreen } from './Screens/Todo/TodoScreen';
 
 import { ScheduleScreen } from './Screens/Schedule/ScheduleScreen';
 import { ScheduleDayScreen } from './Screens/Schedule/ScheduleDayScreen';
+import { EditScheduleDayScreen } from './Screens/Schedule/EditScheduleDayScreen';
 
 const SchedStack = createStackNavigator({
   Schedule: ScheduleScreen,
   ScheduleDay: ScheduleDayScreen,
+  EditSchedule: EditScheduleDayScreen,
 }, {
     headerMode: 'none',
     navigationOptions: {
