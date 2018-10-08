@@ -65,6 +65,7 @@ export class NewBudgetScreen extends Component {
             text: 'Successfully added to budget!',
             buttonText: 'Okay'
           })
+          
         })
         .catch(function (err) {
           Toast.show({

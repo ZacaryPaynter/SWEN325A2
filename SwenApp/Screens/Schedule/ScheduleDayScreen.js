@@ -30,38 +30,40 @@ export class ScheduleDayScreen extends Component {
         items = this.state.item.sched_times;
 
         return (
-            
-      <StyleProvider style={getTheme(commonColor)}>
-            <Container>
-                <Header >
-                    <Left>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='arrow-back' />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title uppercase={false}>{this.state.item.day}</Title>
-                    </Body>
-                </Header>
-                <List dataArray={items}
-                    renderRow={(item) =>
-                        <ListItem icon>
-                            <Left>
-                                <Text>{item.timeid}</Text>
-                            </Left>
-                            <Body>
-                                <Text>{item.title}</Text>
-                                <Text>{item.description}</Text>
-                            </Body>
-                            <Right>
-                                <Button transparent >
-                                    <Icon name='paper' />
-                                </Button>
-                            </Right>
-                        </ListItem>
-                    }>
-                </List>
-            </Container>
+
+            <StyleProvider style={getTheme(commonColor)}>
+                <Container>
+                    <Header >
+                        <Left>
+                            <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                <Icon name='arrow-back' />
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Title>
+                                <Text uppercase={true}>{this.state.item.day}</Text>
+                            </Title>
+                        </Body>
+                    </Header>
+                    <List dataArray={items}
+                        renderRow={(item) =>
+                            <ListItem icon>
+                                <Left>
+                                    <Text>{item.timeid}</Text>
+                                </Left>
+                                <Body>
+                                    <Text>{item.title}</Text>
+                                    <Text>{item.description}</Text>
+                                </Body>
+                                <Right>
+                                    <Button transparent >
+                                        <Icon name='paper' />
+                                    </Button>
+                                </Right>
+                            </ListItem>
+                        }>
+                    </List>
+                </Container>
             </StyleProvider>
         );
     }

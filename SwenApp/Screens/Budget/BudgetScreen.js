@@ -118,7 +118,7 @@ export class BudgetScreen extends Component {
                                     this.checkIncome(data, true)
                                 }
                             renderLeftHiddenRow={data =>
-                                <Button full onPress={() => alert(data.title + " " + data.amount)}>
+                                <Button full onPress={() => alert(data._id+" "+data.title + " " + data.amount)}>
                                     <Icon active name="information-circle" />
                                 </Button>}
                             renderRightHiddenRow={(data, secId, rowId, rowMap) =>
@@ -143,11 +143,11 @@ export class BudgetScreen extends Component {
                                 this.checkIncome(data, false)
                             }
                             renderLeftHiddenRow={data =>
-                                <Button full onPress={() => alert(data.title + " " + data.amount)}>
+                                <Button full info onPress={() => alert(data.title + " " + data.amount)}>
                                     <Icon active name="information-circle" />
                                 </Button>}
                             renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-                                <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap, data)}>
+                                <Button full warning onPress={_ => this.deleteRow(secId, rowId, rowMap, data)}>
                                     <Icon active name="trash" />
                                 </Button>}
                         />
