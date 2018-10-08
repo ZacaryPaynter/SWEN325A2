@@ -7,8 +7,8 @@
  */
 import React, { Component } from 'react';
 import {
-    Container, Header, Left, Body, Input, Label, Text, Icon, StyleProvider,
-    Right, Title, Content, Form, Item, Button, List, ListItem
+    Container, Header, Left, Body, Input, Label, Text, Icon, StyleProvider, Grid, Col, Row,
+    Right, Title, Content, Form, Item, Button, List, ListItem, Card, CardItem
 } from 'native-base';
 import { View, ActivityIndicator } from 'react-native';
 
@@ -58,35 +58,34 @@ export class ScheduleScreen extends Component {
 
         return (
 
-      <StyleProvider style={getTheme(commonColor)}>
-            <Container>
-                <Header >
-                    <Left>
-                        <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-                            <Icon name='menu' />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Schedule</Title>
-                    </Body>
-                </Header>
-                <List dataArray={items}
-                    renderRow={(item) =>
-                        <ListItem icon>
-                            <Body>
-                                <Text>{item.day}</Text>
-                            </Body>
-                            <Right>
-                                <Button transparent onPress={() => this.props.navigation.navigate('ScheduleDay', {
-                                    item: item, user: this.state.user
-                                })}>
-                                    <Icon name='arrow-forward' />
-                                </Button>
-                            </Right>
-                        </ListItem>
-                    }>
-                </List>
-            </Container>
+            <StyleProvider style={getTheme(commonColor)}>
+                <Container>
+                    <Header >
+                        <Left>
+                            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
+                                <Icon name='menu' />
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Title>Schedule</Title>
+                        </Body>
+                    </Header>
+                        <Card>
+                            <List dataArray={items}
+                                renderRow={(item) =>
+                                    <CardItem button onPress={() => this.props.navigation.navigate('ScheduleDay', {
+                                        item: item, user: this.state.user
+                                    })}>
+                                        <Body>
+                                            <Icon name="calendar" />
+                                        </Body>
+                                        <Right>
+                                        <Text uppercase={true}>{item.day}</Text>
+                                        </Right>
+                                    </CardItem>}>
+                            </List>
+                        </Card>
+                </Container>
             </StyleProvider>
         );
     }

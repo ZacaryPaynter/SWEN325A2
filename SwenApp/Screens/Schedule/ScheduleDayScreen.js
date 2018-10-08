@@ -41,8 +41,8 @@ export class ScheduleDayScreen extends Component {
                         </Left>
                         <Body>
                             <Title>
-                                <Text uppercase={true}>{this.state.item.day}</Text>
-                            </Title>
+                               {this.state.item.day}
+                               </Title>
                         </Body>
                     </Header>
                     <List dataArray={items}
@@ -57,7 +57,7 @@ export class ScheduleDayScreen extends Component {
                                 </Body>
                                 <Right>
                                     <Button transparent >
-                                        <Icon name='paper' />
+                                    <Icon type="EvilIcons" name="pencil" />
                                     </Button>
                                 </Right>
                             </ListItem>

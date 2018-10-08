@@ -29,7 +29,6 @@ export class NewBudgetScreen extends Component {
 
   onValueChange(value) {
     if (value == 'outcome') {
-      alert("it is an outcome woooo")
       this.state.isIncome = false
     }
     else { this.state.isIncome = true }
@@ -63,21 +62,24 @@ export class NewBudgetScreen extends Component {
         .then((responseData) => {
           Toast.show({
             text: 'Successfully added to budget!',
-            buttonText: 'Okay'
+            buttonText: 'Okay', 
+            type: 'success'
           })
           
         })
         .catch(function (err) {
           Toast.show({
             text: 'Unable to add budget, please try again!',
-            buttonText: 'Okay'
+            buttonText: 'Okay',
+            type: 'warning'
           })
         });
     }
     else {
       Toast.show({
         text: 'Please enter form details!',
-        buttonText: 'Okay'
+        buttonText: 'Okay',
+        type: 'warning'
       })
     }
 
