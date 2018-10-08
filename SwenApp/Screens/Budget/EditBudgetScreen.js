@@ -21,8 +21,6 @@ export class EditBudgetScreen extends Component {
 
   }
 
-
-
   onTextChanged(text) {
     // code to remove non-numeric characters from text
     this.setState({ amount: text })
@@ -70,14 +68,15 @@ export class EditBudgetScreen extends Component {
       .then((responseData) => {
         Toast.show({
           text: 'Successfully edited budget!',
-          buttonText: 'Okay'
+          buttonText: 'Okay',
+          type: 'success'
         })
-
       })
       .catch(function (err) {
         Toast.show({
-          text: 'Unable to add budget, please try again!',
-          buttonText: 'Okay'
+          text: 'Unable to edit budget, please try again!',
+          buttonText: 'Okay',
+          type: 'danger'
         })
       });
 

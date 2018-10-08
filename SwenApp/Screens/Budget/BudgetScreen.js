@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { ListView, View, ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
+import { ListView, View, ActivityIndicator, Dimensions, StyleSheet, Alert } from 'react-native';
 import {
-    Container, Header, Content, Button, Title, Card, StyleProvider,
-    Icon, List, ListItem, Text, Left, Right, Body, CardItem
+    Container, Header, Content, Button, Title, Card, StyleProvider, Toast,
+    Icon, List, ListItem, Text, Left, Right, Body, CardItem,
 } from 'native-base';
 import getTheme from '../../native-base-theme/components';
 import commonColor from '../../native-base-theme/variables/commonColor';
@@ -28,9 +28,29 @@ export class BudgetScreen extends Component {
             isLoading: true,
             basic: true,
             listViewData: [],
-            incomes: [],
-            outcomes: []
         };
+    }
+
+    calculateOverallBudget(){
+        //reset the totals
+        var incomes = 0
+        var outcomes = 0
+        var spending = 0
+
+        this.state.listViewData.forEach(function(element) {
+            if (element.income==true){incomes = incomes + parseInt(element.amount) }
+            else { outcomes = outcomes + parseInt(element.amount) }
+          });
+
+        spending = incomes - outcomes
+
+        Alert.alert(
+            'Overall Budget Information',
+            'Total Income: $'+incomes+' Total Outcome: $'+outcomes+' Total Spending Money Left: $'+spending,
+             [
+              {text: 'OK', onPress: () => console.log('OK Pressed')}
+             ])
+
     }
 
 
@@ -98,6 +118,7 @@ export class BudgetScreen extends Component {
 
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         const income = true;
+
         return (
             <StyleProvider style={getTheme(commonColor)}>
             <Container>
@@ -111,8 +132,20 @@ export class BudgetScreen extends Component {
                         <Title>Budget</Title>
                     </Body>
                     <Right>
-                        <Button transparent onPress={() => this.props.navigation.navigate('NewBudget')}>
+                    <Button transparent onPress={() => this.calculateOverallBudget()}>
+                    <Icon name="information-circle" />
+                    </Button>
+                    <Button transparent onPress={() => this.props.navigation.navigate('NewBudget')}>
                             <Icon name='add' />
+                        </Button>
+                    <Button transparent onPress={() =>Alert.alert(
+  'How to Use the Budget!',
+  'To add a new item click the + button, to edit an item slide right, to remove an item slide left, to see your overall budget click the i button!',
+   [
+    {text: 'OK', onPress: () => console.log('OK Pressed')},
+  ]
+)}>
+                             <Icon type="FontAwesome" name="question-circle" />
                         </Button>
                     </Right>
                 </Header>
@@ -130,7 +163,7 @@ export class BudgetScreen extends Component {
                                 }
                             renderLeftHiddenRow={data =>
                                 <Button full info onPress={() => this.editBudget(data)}>
-                                    <Icon active name="information-circle" />
+                                    <Icon type="FontAwesome" name="edit" />
                                 </Button>}
                             renderRightHiddenRow={(data, secId, rowId, rowMap) =>
                                 <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap, data)}>
@@ -140,8 +173,7 @@ export class BudgetScreen extends Component {
                     </Card>
 
                 </Container>
-                <Container style={{ width: styles.mainContainer.width, height: styles.mainContainer.height }}>
-                
+                <Container style={{ width: styles.mainContainer.width, height: styles.mainContainer.height }}>  
                     <Card >
                     <CardItem header >
                         <Text>OUTCOME</Text>
