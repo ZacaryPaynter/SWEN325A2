@@ -14,13 +14,12 @@ import {
 import getTheme from '../../native-base-theme/components';
 import commonColor from '../../native-base-theme/variables/commonColor';
 
-export class NewBudgetScreen extends Component {
+export class EditScheduleDayScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: '', title: '', amount: 0, value: '', isIncome: true, selected: undefined };
+    this.state = { user: '', title: '', description: '', category:'', item: {}, dayItem: {},  value: '',};
+
   }
-
-
 
   onTextChanged(text) {
     // code to remove non-numeric characters from text
@@ -28,64 +27,61 @@ export class NewBudgetScreen extends Component {
   }
 
   onValueChange(value) {
-    if (value == 'outcome') {
-      this.state.isIncome = false
-    }
-    else { this.state.isIncome = true }
     this.setState({
-      selected: value
+      category: value
     });
   }
 
   submitForm() {
+    var target = this.state.item.timeid
+    var title = this.state.title
+    var desc = this.state.description
+    var cat = this.state.category
 
-    this.state.amount = parseInt(this.state.value);
-
-    if (this.state.amount > 0 && this.state.title != '') {
-      var url = 'http://agile-cove-43620.herokuapp.com/api/budget';
+    this.state.dayItem.sched_times.forEach(function (element) {
+      if (element.timeid==target){
+        element.title = title
+        element.description = desc
+        element.category = cat
+        return
+      }});
+       
+      var url = 'http://agile-cove-43620.herokuapp.com/api/schedule/' + this.state.dayItem._id;
 
       var object = {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          "title": this.state.title,
-          "amount": this.state.amount,
-          "income": this.state.isIncome,
+            "day" : this.state.dayItem.day,
+            "sched_times": this.state.dayItem.sched_times,
         })
       };
-
+  
       fetch(url, object)
         .then((response) => response.text())
         .then((responseData) => {
           Toast.show({
-            text: 'Successfully added to budget!',
-            buttonText: 'Okay', 
+            text: 'Successfully edited budget!',
+            buttonText: 'Okay',
             type: 'success'
           })
-          
         })
         .catch(function (err) {
           Toast.show({
-            text: 'Unable to add budget, please try again!',
+            text: 'Unable to edit budget, please try again!',
             buttonText: 'Okay',
-            type: 'warning'
+            type: 'danger'
           })
         });
     }
-    else {
-      Toast.show({
-        text: 'Please enter form details!',
-        buttonText: 'Okay',
-        type: 'warning'
-      })
-    }
-
-  }
 
   render() {
+    this.state.dayItem = this.props.navigation.getParam('dayItem', 'no dayItem');
+    this.state.item = this.props.navigation.getParam('item', 'no item');
+
     return (
       <StyleProvider style={getTheme(commonColor)}>
         <Container>
@@ -96,7 +92,7 @@ export class NewBudgetScreen extends Component {
               </Button>
             </Left>
             <Body>
-              <Title>NEW BUDGET</Title>
+              <Title>EDIT SCHEDULE</Title>
             </Body>
           </Header>
           <Content>
@@ -104,16 +100,16 @@ export class NewBudgetScreen extends Component {
               <Item Label>
                 <Label>Title</Label>
                 <Input
+                  placeholder={this.state.item.title}
                   onChangeText={(title) => this.setState({ title })}
                   value={this.state.title} />
               </Item>
               <Item Label>
-                <Label>Amount</Label>
+              <Label>Description</Label>
                 <Input
-                  type="number"
-                  keyboardType="numeric"
-                  onChangeText={(value) => this.setState({ value })}
-                  value={this.state.value} />
+                  placeholder={this.state.item.description}
+                  onChangeText={(description) => this.setState({ description })}
+                  value={this.state.description} />
               </Item>
               <Item>
                 <Picker
@@ -122,11 +118,13 @@ export class NewBudgetScreen extends Component {
                   placeholderStyle={{ color: "#bfc6ea" }}
                   placeholderIconColor="#007aff"
                   style={{ width: undefined }}
-                  selectedValue={this.state.selected}
+                  selectedValue={this.state.category}
                   onValueChange={this.onValueChange.bind(this)}
                 >
-                  <Picker.Item label="Income" value="income" />
-                  <Picker.Item label="Outcome" value="outcome" />
+                  <Picker.Item label="Work" value="work" />
+                  <Picker.Item label="School" value="school" />
+                  <Picker.Item label="Home" value="home" />
+                  <Picker.Item label="Misc" value="misc" />
                 </Picker>
               </Item>
             </Form>
