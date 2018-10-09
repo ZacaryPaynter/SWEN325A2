@@ -10,11 +10,10 @@ import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import { Root } from './node_modules/native-base';
 import { LoginScreen } from './Screens/LoginScreen';
 import { BudgetScreen } from './Screens/Budget/BudgetScreen';
-import { NewBudgetScreen } from './Screens/Budget/NewBudgetScreen'
-import { EditBudgetScreen } from './Screens/Budget/EditBudgetScreen'
-
+import { NewBudgetScreen } from './Screens/Budget/NewBudgetScreen';
+import { EditBudgetScreen } from './Screens/Budget/EditBudgetScreen';
 import { TodoScreen } from './Screens/Todo/TodoScreen';
-import {NewTaskScreen} from './Screens/Todo/NewTodoScreen';
+import { NewTaskScreen } from './Screens/Todo/NewTodoScreen';
 import { ScheduleScreen } from './Screens/Schedule/ScheduleScreen';
 import { ScheduleDayScreen } from './Screens/Schedule/ScheduleDayScreen';
 import { EditScheduleDayScreen } from './Screens/Schedule/EditScheduleDayScreen';
@@ -58,7 +57,7 @@ const DrawerStack = createDrawerNavigator(
   {
     Budget: BudStack,
     Todo: TodoStack,
-    Schedule: SchedStack
+    Schedule: SchedStack,
   }
 );
 

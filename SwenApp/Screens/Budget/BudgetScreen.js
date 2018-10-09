@@ -69,7 +69,12 @@ export class BudgetScreen extends Component {
 
             })
             .catch((error) => {
-                console.error(error);
+                Alert.alert(
+                    'Unable to retrieve budget information',
+                    error,
+                    [
+                        { text: 'OK'}
+                    ])
             });
     }
 

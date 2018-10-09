@@ -7,7 +7,7 @@
  */
 import React, { Component } from 'react';
 import {
-  Container, Header, Left, Body, Input, Label, Text, Icon, Toast,
+  Container, Header, Left, Body, Input, Label, Text, Icon, Toast, Card, CardItem,
   Right, Title, Content, Form, Item, Button, Picker, StyleProvider
 } from 'native-base';
 
@@ -17,7 +17,7 @@ import commonColor from '../../native-base-theme/variables/commonColor';
 export class EditScheduleDayScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: '', title: '', description: '', category:'', item: {}, dayItem: {},  value: '',};
+    this.state = { user: '', title: '', description: '', category: '', item: {}, dayItem: {}, value: '', };
 
   }
 
@@ -33,7 +33,7 @@ export class EditScheduleDayScreen extends Component {
   }
 
   submitForm(flagForRemove) {
-    if (flagForRemove==true){
+    if (flagForRemove == true) {
       this.state.category = ''
     }
     var target = this.state.item.timeid
@@ -42,63 +42,64 @@ export class EditScheduleDayScreen extends Component {
     var cat = this.state.category
 
     this.state.dayItem.sched_times.forEach(function (element) {
-      if (element.timeid==target){
-        if ((title != '' && flagForRemove==false) || (title == '' && flagForRemove==true)) element.title = title
-        if ((desc != '' && flagForRemove==false) || (desc == '' && flagForRemove==true)) element.description = desc
-        if ((cat != '' && flagForRemove==false) || (desc == '' && flagForRemove==true)) element.category = cat
+      if (element.timeid == target) {
+        if ((title != '' && flagForRemove == false) || (title == '' && flagForRemove == true)) element.title = title
+        if ((desc != '' && flagForRemove == false) || (desc == '' && flagForRemove == true)) element.description = desc
+        if ((cat != '' && flagForRemove == false) || (desc == '' && flagForRemove == true)) element.category = cat
         return
-      }});
-       
-      var url = 'http://agile-cove-43620.herokuapp.com/api/schedule/' + this.state.dayItem._id;
+      }
+    });
 
-      var object = {
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "day" : this.state.dayItem.day,
-            "sched_times": this.state.dayItem.sched_times,
+    var url = 'http://agile-cove-43620.herokuapp.com/api/schedule/' + this.state.dayItem._id;
+
+    var object = {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "day": this.state.dayItem.day,
+        "sched_times": this.state.dayItem.sched_times,
+      })
+    };
+
+    fetch(url, object)
+      .then((response) => response.text())
+      .then((responseData) => {
+        Toast.show({
+          text: 'Successfully edited budget!',
+          buttonText: 'Okay',
+          type: 'success'
         })
-      };
-  
-      fetch(url, object)
-        .then((response) => response.text())
-        .then((responseData) => {
-          Toast.show({
-            text: 'Successfully edited budget!',
-            buttonText: 'Okay',
-            type: 'success'
-          })
-          this.setState({
-            user: '',
-            title: '',
-            description: '',
-            category: '',
-            item: {}, 
-            dayItem: {},  
-            value: '',
+        this.setState({
+          user: '',
+          title: '',
+          description: '',
+          category: '',
+          item: {},
+          dayItem: {},
+          value: '',
         });
-          
+
+      })
+      .catch(function (err) {
+        Toast.show({
+          text: 'Unable to edit budget, please try again!',
+          buttonText: 'Okay',
+          type: 'danger'
         })
-        .catch(function (err) {
-          Toast.show({
-            text: 'Unable to edit budget, please try again!',
-            buttonText: 'Okay',
-            type: 'danger'
-          })
-        });
-    }
+      });
+  }
 
-    isDisabled(){
-      if (this.state.item.title=='') return true
-      else return false
-    }
+  isDisabled() {
+    if (this.state.item.title == '') return true
+    else return false
+  }
 
-    cleanNav() {
-      this.props.navigation.reset;
-      this.props.navigation.push('Schedule')
+  cleanNav() {
+    this.props.navigation.reset;
+    this.props.navigation.push('Schedule')
   }
 
   render() {
@@ -119,6 +120,18 @@ export class EditScheduleDayScreen extends Component {
             </Body>
           </Header>
           <Content>
+            <Card>
+              <CardItem header>
+                <Text>
+                  Day: {this.state.dayItem.day}
+                </Text>
+              </CardItem>
+              <CardItem>
+                <Text>
+                  Time: {this.state.item.timeid}
+                </Text>
+              </CardItem>
+            </Card>
             <Form>
               <Item Label>
                 <Label>Title</Label>
@@ -128,7 +141,7 @@ export class EditScheduleDayScreen extends Component {
                   value={this.state.title} />
               </Item>
               <Item Label>
-              <Label>Description</Label>
+                <Label>Description</Label>
                 <Input
                   placeholder={this.state.item.description}
                   onChangeText={(description) => this.setState({ description })}
@@ -154,7 +167,7 @@ export class EditScheduleDayScreen extends Component {
             <Button block onPress={() => this.submitForm(false)}>
               <Text>Submit</Text>
             </Button>
-            <Button danger disabled={this.isDisabled()}  block onPress={() => this.submitForm(true)}>
+            <Button danger disabled={this.isDisabled()} block onPress={() => this.submitForm(true)}>
               <Text>Remove</Text>
             </Button>
           </Content>
