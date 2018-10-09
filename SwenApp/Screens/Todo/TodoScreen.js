@@ -3,6 +3,7 @@ import {
     Badge, Container, Header, Left, Body, Input, Label, Text, Icon, StyleProvider,
     Right, Tab, Tabs, TabHeading, Toast, Title, Content, Form, Item, Button, Picker, List, ListItem
 } from 'native-base';
+import { Alert } from 'react-native';
 
 import getTheme from '../../native-base-theme/components';
 import commonColor from '../../native-base-theme/variables/commonColor';
@@ -80,14 +81,20 @@ export class TodoScreen extends Component {
         item = this.state.current;
         item.title = text;
         this.setState({ current: item });
-        console.log(this.state.current);
+        
+    }
+
+    updateCurrentDes(text) {
+        item = this.state.current;
+        item.description = text;
+        this.setState({ current: item });
+        
     }
 
     updateList(list) {
         item = this.state.current;
         item.list = list;
         this.setState({ current: item });
-        console.log(this.state.current);
     }
 
     submitChanges() {
@@ -161,6 +168,15 @@ export class TodoScreen extends Component {
                         <Right>
                             <Button transparent onPress={() => this.props.navigation.navigate('NewTask')}>
                                 <Icon name='add' />
+                            </Button>
+                            <Button transparent onPress={() => Alert.alert(
+                                'How to Use the Todo!',
+                                'To add a new item click the + button, to edit, remove, or move items select them from the list',
+                                [
+                                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                                ]
+                            )}>
+                                <Icon type="FontAwesome" name="question-circle" />
                             </Button>
                         </Right>
                     </Header>
@@ -262,12 +278,19 @@ export class TodoScreen extends Component {
                                 <Picker.Item label="DOING" value="2" />
                                 <Picker.Item label="DONE" value="3" />
                             </Picker>
+                            <Item Label >
+                                <Label>Description</Label>
+                                <Input
+                                    placeholder={this.state.current.description}
+                                    onChangeText={(text) => this.updateCurrentDes(text)}
+                                    value={this.state.current.description} />
+                            </Item>
 
                             <Button block onPress={() => this.submitChanges()}>
                                 <Text>Submit</Text>
                             </Button>
-                            <Button block onPress={() => this.submitDelete()}>
-                                <Text>Delete</Text>
+                            <Button block danger onPress={() => this.submitDelete()}>
+                                <Text>Remove</Text>
                             </Button>
                         </Form>
                     </PopupDialog>
